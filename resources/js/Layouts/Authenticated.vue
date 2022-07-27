@@ -8,6 +8,7 @@ import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 const showingNavigationDropdown = ref(false);
+
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const showingNavigationDropdown = ref(false);
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
@@ -35,7 +36,7 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
-                            <div class="ml-3 relative">
+                            <div v-if="$page.props.auth.user" class="ml-3 relative">
                                 <BreezeDropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -56,6 +57,15 @@ const showingNavigationDropdown = ref(false);
                                     </template>
                                 </BreezeDropdown>
                             </div>
+                            <template v-else>
+                                <Link :href="route('login')" class="text-sm text-gray-700 underline">
+                                    Log in
+                                </Link>
+
+                                <Link  :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
+                                    Register
+                                </Link>
+                            </template>
                         </div>
 
                         <!-- Hamburger -->
@@ -79,7 +89,7 @@ const showingNavigationDropdown = ref(false);
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
+                    <div v-if="$page.props.auth.user" class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">
                             <div class="font-medium text-base text-gray-800">{{ $page.props.auth.user.name }}</div>
                             <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
